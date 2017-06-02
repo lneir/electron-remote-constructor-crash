@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Hello World!</title>
+  </head>
+  <body>
+    <p>Steps to repo issue:</p>
+    <p>- press 'add object tag' button</p>
+    <p>- press 'create remote' button</p>
+    <p>Notice error in console:  Cannot call constructor on missing remote object</p>
+    <br>
+    <button id='add-object'>add object tag</button>
+    <button id='create-remote'>create remote</button>
+    <div id='object-wrapper'></div>
+  </body>
+
+  <script>
+
+    var addObjectButton = document.getElementById('add-object');
+    addObjectButton.addEventListener('click', function() {
+
+        // this function will add 'object' tag to dom then immediately remove.
+        // adding object tag causes preload to be invoked since this creates
+        // a new js context.
+
+        var el = document.getElementById('object-wrapper');
+
+        var obj = document.createElement('object');
+        obj.type = 'text/html';
+        obj.data = 'about:blank';
+        el.appendChild(obj);
+
+        setTimeout(function() {
+            if (el.firstChild) {
+                el.removeChild(el.firstChild);
+            }
+        }, 0);
+    });
+
+    var createRemoteButton = document.getElementById('create-remote');
+    createRemoteButton.addEventListener('click', function() {
+        // this constructor will fail if 'add object tag' is called first.
+        var remoteTest = new api.Test();
+        remoteTest.helloWorld();
+    });
+   </script>
+</html>
